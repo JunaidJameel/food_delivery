@@ -1,4 +1,5 @@
 import 'package:design/controller/cart_controller.dart';
+import 'package:design/helper/static%20_lists.dart';
 import 'package:design/utils/app_constants.dart';
 import 'package:design/utils/colors.dart';
 import 'package:design/utils/images.dart';
@@ -63,7 +64,7 @@ class DigitalPaymentScreen extends StatelessWidget {
                       ),
                     ),
                     title: Text(
-                      cartController.digitalPaymentList[index]['name'],
+                      StaticLists.digitalPaymentList[index]['name'],
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall!

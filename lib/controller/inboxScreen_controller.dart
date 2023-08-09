@@ -1,12 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class InboxController extends GetxController {
-  var messageController = TextEditingController();
   var messages = <String>[].obs;
 
-  void sendMessage(String message) {
+  void sendMessage(String message, controller) {
     messages.add(message);
-    messageController.clear();
+    controller.clear();
   }
 }

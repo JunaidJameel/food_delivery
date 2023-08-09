@@ -15,7 +15,7 @@ class ForgotPasswordWidget extends StatelessWidget {
     super.key,
   });
   final AuthController authController = Get.put(AuthController());
-
+  var forgotPasswordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -83,11 +83,11 @@ class ForgotPasswordWidget extends StatelessWidget {
                 ),
                 GetBuilder<AuthController>(
                   builder: (con) => AuthTxtField(
-                    controller: authController.forgotPasswordController,
+                    controller: forgotPasswordController,
                     validatorTxt: 'Please enter email',
                     labelText: 'Enter Email',
                     onchange: (value) {
-                      authController.updateEmailValidity(value.length > 7);
+                      // authController.updateEmailValidity(value.length > 7);
                     },
                   ),
                 ),
@@ -97,16 +97,12 @@ class ForgotPasswordWidget extends StatelessWidget {
                 GetBuilder<AuthController>(
                   builder: (con) => ButtonWidget(
                       buttonTxt: 'Send Email',
-                      buttonColor:
-                          authController.forgotPasswordController.text.length >=
-                                  4
-                              ? ColorsOfApp.appColor
-                              : ColorsOfApp.textFieldgreyColor,
+                      buttonColor: forgotPasswordController.text.length >= 4
+                          ? ColorsOfApp.appColor
+                          : ColorsOfApp.textFieldgreyColor,
                       ontap: () {
                         if (formKey.currentState!.validate()) {
-                          if (authController
-                                  .forgotPasswordController.text.length >
-                              4) {
+                          if (forgotPasswordController.text.length > 4) {
                             Get.back();
 
                             showModalBottomSheet<dynamic>(

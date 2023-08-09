@@ -1,4 +1,5 @@
 import 'package:design/controller/auth_controller.dart';
+import 'package:design/helper/static%20_lists.dart';
 import 'package:design/utils/colors.dart';
 import 'package:design/utils/images.dart';
 import 'package:design/view/screens/main_screens/explore_screen/explore_screen.dart';
@@ -10,16 +11,6 @@ class FilterContainerWidget extends StatelessWidget {
 
   final AuthController authController = Get.put(AuthController());
 
-  List<Map<String, dynamic>> containerDataList = [
-    {
-      'img': Images.chiefHat,
-      'title': 'Do you love to cook food?',
-    },
-    {
-      'img': Images.cartBag,
-      'title': 'Do you love to eat food?',
-    }
-  ];
   @override
   Widget build(BuildContext context) {
     var s = MediaQuery.of(context).size;
@@ -28,9 +19,9 @@ class FilterContainerWidget extends StatelessWidget {
       width: s.width,
       child: ListView.builder(
         physics: const ScrollPhysics(),
-        itemCount: containerDataList.length,
-        itemBuilder: (context, index) => Obx(
-          () => GestureDetector(
+        itemCount: StaticLists.containerDataList.length,
+        itemBuilder: (context, index) => GetBuilder<AuthController>(
+          builder: (con) => GestureDetector(
             onTap: () {
               authController.initialTap.value = index;
               Future.delayed(const Duration(seconds: 2), () {
@@ -51,32 +42,32 @@ class FilterContainerWidget extends StatelessWidget {
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: authController.initialTap.value == index
-                            ? authController.filterTap.value == false
+                            ? con.filterTap == false
                                 ? ColorsOfApp.appColor
                                 : Colors.transparent
-                            : authController.filterTap.value == true
+                            : con.filterTap == true
                                 ? ColorsOfApp.appColor
                                 : Colors.transparent,
                       ),
                       borderRadius: BorderRadius.circular(10),
                       color: authController.initialTap.value == index
-                          ? authController.filterTap.value == false
+                          ? con.filterTap == false
                               ? ColorsOfApp.containerLightBlueColor
                               : ColorsOfApp.containerlightGreyColor
-                          : authController.filterTap.value == true
+                          : con.filterTap == true
                               ? ColorsOfApp.containerLightBlueColor
                               : ColorsOfApp.containerlightGreyColor,
                     ),
                     child: Center(
                       child: ListTile(
                         leading: Image.asset(
-                          containerDataList[index]['img'],
+                          StaticLists.containerDataList[index]['img'],
                           height: s.height * 0.06,
                           color: ColorsOfApp.appColor,
                           fit: BoxFit.cover,
                         ),
                         title: Text(
-                          containerDataList[index]['title'],
+                          StaticLists.containerDataList[index]['title'],
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!

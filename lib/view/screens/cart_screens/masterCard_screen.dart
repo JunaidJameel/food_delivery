@@ -1,4 +1,4 @@
-import 'package:design/controller/masterCard_controller.dart';
+import 'package:design/controller/exploreScreen_controller.dart';
 import 'package:design/utils/app_constants.dart';
 import 'package:design/utils/colors.dart';
 import 'package:design/view/base/button-widget.dart';
@@ -15,7 +15,12 @@ import 'widget/inputFormater_widget.dart';
 
 class MasterCardScreen extends StatelessWidget {
   MasterCardScreen({super.key});
-  MasterCardController controller = Get.put(MasterCardController());
+
+  TextEditingController cardNumberController = TextEditingController();
+  TextEditingController expiryDateController = TextEditingController();
+  TextEditingController cardHolderNameController = TextEditingController();
+  TextEditingController cvvCodeController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     var s = MediaQuery.of(context).size;
@@ -33,6 +38,7 @@ class MasterCardScreen extends StatelessWidget {
         leading: IconButton(
           onPressed: () {
             Get.back();
+            ExploreController.instance.loading = true;
           },
           icon: const Icon(
             Icons.keyboard_arrow_left,
@@ -47,28 +53,21 @@ class MasterCardScreen extends StatelessWidget {
           children: [
             const CustomDividerWidget(),
             SizedBox(
-              height: s.height * 0.32,
-              child: Obx(() => Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: CreditCardWidget(
-                      labelValidThru: '',
-                      cardNumber: controller.cardNumber.value,
-                      textStyle: Theme.of(context)
-                          .textTheme
-                          .bodyMedium!
-                          .copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.normal),
-                      expiryDate: controller.expiryDate.value,
-                      cardHolderName: controller.cardHolderName.value,
-                      cvvCode: controller.cvvCode.value,
-                      showBackView: controller.showBackView.value,
-                      onCreditCardWidgetChange: (brand) {
-                        controller.updateCardBrand();
-                      },
-                    ),
-                  )),
-            ),
+                height: s.height * 0.32,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: CreditCardWidget(
+                    labelValidThru: '',
+                    cardNumber: cardNumberController.text,
+                    textStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.normal),
+                    expiryDate: expiryDateController.text,
+                    cardHolderName: cardHolderNameController.text,
+                    cvvCode: cvvCodeController.text,
+                    showBackView: false,
+                    onCreditCardWidgetChange: (brand) {},
+                  ),
+                )),
             const CustomDividerWidget(),
             Padding(
               padding: const EdgeInsets.symmetric(
@@ -92,7 +91,7 @@ class MasterCardScreen extends StatelessWidget {
                   TextFieldWidget(
                     contentPadding: const EdgeInsets.only(left: 20),
                     floatingLabelBehavior: FloatingLabelBehavior.always,
-                    controller: controller.cardHolderNameController,
+                    controller: cardHolderNameController,
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: const BorderSide(
@@ -106,7 +105,7 @@ class MasterCardScreen extends StatelessWidget {
                     height: s.height * 0.03,
                   ),
                   TextFieldWidget(
-                    controller: controller.cardNumberController,
+                    controller: cardNumberController,
                     textInputAction: TextInputAction.done,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -134,7 +133,7 @@ class MasterCardScreen extends StatelessWidget {
                         child: TextFieldWidget(
                           contentPadding: const EdgeInsets.only(left: 20),
                           floatingLabelBehavior: FloatingLabelBehavior.always,
-                          controller: controller.expiryDateController,
+                          controller: expiryDateController,
                           keyboardType: TextInputType.number,
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -156,7 +155,7 @@ class MasterCardScreen extends StatelessWidget {
                           keyboardType: TextInputType.number,
                           contentPadding: const EdgeInsets.only(left: 20),
                           floatingLabelBehavior: FloatingLabelBehavior.always,
-                          controller: controller.cvvCodeController,
+                          controller: cvvCodeController,
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                               borderSide: const BorderSide(
@@ -202,18 +201,11 @@ class MasterCardScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: AppConstants.defaultPadding),
-                  child: Obx(
-                    () => ButtonWidget(
-                        buttonColor: controller.cvvCode.value.length == 3
-                            ? ColorsOfApp.appColor
-                            : Colors.grey,
-                        buttonTxt: 'Done',
-                        ontap: () {
-                          if (controller.cvvCode.value.length == 3) {
-                            Get.to(TrackOrderScreen());
-                          }
-                        }),
-                  ),
+                  child: ButtonWidget(
+                      buttonTxt: 'Done',
+                      ontap: () {
+                        Get.to(const TrackOrderScreen());
+                      }),
                 ),
               ],
             ),

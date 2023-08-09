@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 class ChatWidget extends StatelessWidget {
   ChatWidget({super.key});
   InboxController inboxController = Get.put(InboxController());
+  var messageController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var s = MediaQuery.of(context).size;
@@ -99,11 +100,11 @@ class ChatWidget extends StatelessWidget {
                 focusedBorder: InputBorder.none,
                 textfiledColor: const Color.fromARGB(255, 232, 232, 232),
                 hintText: 'Type a message',
-                controller: inboxController.messageController,
+                controller: messageController,
                 suffixIcon: IconButton(
                   onPressed: () {
-                    inboxController
-                        .sendMessage(inboxController.messageController.text);
+                    inboxController.sendMessage(
+                        messageController.text, messageController);
                   },
                   icon: const Icon(
                     Icons.send,

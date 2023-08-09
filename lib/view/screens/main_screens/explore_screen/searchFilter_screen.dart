@@ -1,4 +1,5 @@
 import 'package:design/controller/exploreScreen_controller.dart';
+import 'package:design/helper/static%20_lists.dart';
 import 'package:design/utils/app_constants.dart';
 import 'package:design/utils/colors.dart';
 import 'package:design/utils/images.dart';
@@ -65,7 +66,7 @@ class SearchFilterScreen extends StatelessWidget {
               height: s.height * 0.25,
               child: ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: exploreController.sortByList.length,
+                itemCount: StaticLists.sortByList.length,
                 padding: const EdgeInsets.symmetric(
                   vertical: 10,
                 ),
@@ -79,11 +80,10 @@ class SearchFilterScreen extends StatelessWidget {
                             const EdgeInsets.symmetric(horizontal: 0),
                         minLeadingWidth: 0,
                         leading: Image.asset(
-                          exploreController.sortByList[index]['img'],
+                          StaticLists.sortByList[index]['img'],
                           height: s.height * 0.028,
                         ),
-                        title:
-                            Text(exploreController.sortByList[index]['title']),
+                        title: Text(StaticLists.sortByList[index]['title']),
                         trailing: Transform.scale(
                           scale: 1.3,
                           child: GetBuilder<ExploreController>(
@@ -95,7 +95,7 @@ class SearchFilterScreen extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(4),
                               ),
-                              value: controller.sortByList[index]
+                              value: StaticLists.sortByList[index]
                                   ['filter'], // Use .value here
                               onChanged: (bool? value) {
                                 controller.onFilterChanged(
@@ -114,15 +114,14 @@ class SearchFilterScreen extends StatelessWidget {
             SizedBox(
               height: s.height * 0.14,
               child: ListView.builder(
-                itemCount: exploreController.filterPrices.length,
+                itemCount: StaticLists.filterPrices.length,
                 scrollDirection: Axis.horizontal,
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) => Padding(
                   padding: EdgeInsets.only(
-                      right:
-                          exploreController.foodCategoryList.length - 1 == index
-                              ? 16
-                              : 22),
+                      right: StaticLists.foodCategoryList.length - 1 == index
+                          ? 16
+                          : 22),
                   child: GetBuilder<ExploreController>(
                     init: ExploreController(),
                     builder: (controller) => GestureDetector(
@@ -136,7 +135,7 @@ class SearchFilterScreen extends StatelessWidget {
                                 ? ColorsOfApp.appColor
                                 : const Color.fromARGB(154, 239, 239, 239),
                         child: Text(
-                          '${exploreController.filterPrices[index]}\$',
+                          '${StaticLists.filterPrices[index]}\$',
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall!
@@ -183,12 +182,11 @@ class SearchFilterScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Image.asset(
-                                  exploreController.categoryList[index]['img'],
+                                  StaticLists.categoryList[index]['img'],
                                   height: s.height * 0.05,
                                 ),
                                 Text(
-                                  exploreController.categoryList[index]
-                                      ['title'],
+                                  StaticLists.categoryList[index]['title'],
                                   style: TextStyle(
                                       color: index ==
                                               exploreController

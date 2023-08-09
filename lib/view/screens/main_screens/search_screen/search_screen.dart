@@ -1,4 +1,5 @@
 import 'package:design/controller/searchScreen_controller..dart';
+import 'package:design/helper/static%20_lists.dart';
 import 'package:design/utils/app_constants.dart';
 import 'package:design/utils/colors.dart';
 import 'package:design/utils/images.dart';
@@ -94,8 +95,8 @@ class SearchScreen extends StatelessWidget {
             ),
             Obx(
               () => Wrap(
-                children: List.generate(
-                    searchController.mealCategoryList.length, (index) {
+                children:
+                    List.generate(StaticLists.mealCategoryList.length, (index) {
                   return GestureDetector(
                     onTap: () {
                       searchController.mealButtonSwitch(index);
@@ -121,7 +122,7 @@ class SearchScreen extends StatelessWidget {
                             horizontal: AppConstants.defaultPadding,
                             vertical: 10),
                         child: Text(
-                          searchController.mealCategoryList[index]['title'],
+                          StaticLists.mealCategoryList[index]['title'],
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall!
@@ -144,14 +145,14 @@ class SearchScreen extends StatelessWidget {
             ),
             Obx(
               () => Wrap(
-                children: List.generate(
-                    searchController.foodCategoryList.length, (index) {
+                children:
+                    List.generate(StaticLists.foodCategoryList.length, (index) {
                   return TextButton(
                     onPressed: () {
                       searchController.foodButtonSwitch(index);
                     },
                     child: Text(
-                      searchController.foodCategoryList[index]['title'],
+                      StaticLists.foodCategoryList[index]['title'],
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           fontSize: 14,
                           fontWeight:
@@ -179,7 +180,7 @@ class SearchScreen extends StatelessWidget {
                     crossAxisSpacing: 20.0,
                     mainAxisSpacing: 20.0,
                     mainAxisExtent: 155),
-                itemCount: searchController
+                itemCount: StaticLists
                     .gridItemsList.length, // Total number of items in the grid
                 itemBuilder: (context, index) {
                   return Container(
@@ -188,7 +189,7 @@ class SearchScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(16),
                       image: DecorationImage(
                           image: AssetImage(
-                              searchController.gridItemsList[index]['img']),
+                              StaticLists.gridItemsList[index]['img']),
                           colorFilter: ColorFilter.mode(
                             Colors.black.withOpacity(0.4),
                             BlendMode.darken,
@@ -197,7 +198,7 @@ class SearchScreen extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        searchController.gridItemsList[index]['title'],
+                        StaticLists.gridItemsList[index]['title'],
                         style: TextStyle(color: Colors.white),
                       ),
                     ),

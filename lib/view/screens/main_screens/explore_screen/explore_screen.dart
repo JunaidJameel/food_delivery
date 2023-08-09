@@ -1,10 +1,10 @@
 import 'package:design/controller/exploreScreen_controller.dart';
+import 'package:design/helper/static%20_lists.dart';
 import 'package:design/utils/app_constants.dart';
 import 'package:design/utils/colors.dart';
 import 'package:design/utils/images.dart';
 import 'package:design/view/base/custom_divider.dart';
 import 'package:design/view/base/textfield_widget.dart';
-import 'package:design/view/screens/auth_screens/widget/auth_Textfield.dart';
 import 'package:design/view/screens/cart_screens/cart_screen.dart';
 import 'package:design/view/screens/main_screens/explore_screen/searchFilter_screen.dart';
 import 'package:design/view/screens/main_screens/explore_screen/widget/featuredSeller_widget.dart';
@@ -66,9 +66,7 @@ class ExploreScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: AppConstants.defaultPadding),
             child: GestureDetector(
-              onTap: () {
-                Get.to(const CartScreen());
-              },
+              onTap: () => Get.to(const CartScreen()),
               child: Image.asset(
                 Images.thinCartBag,
                 height: s.height * 0.035,
@@ -144,8 +142,6 @@ class ExploreScreen extends StatelessWidget {
                         textfiledColor:
                             const Color.fromARGB(255, 232, 232, 232),
                         hintText: 'Search foods and Ketchen',
-
-                        controller: exploreController.exploreTxtController,
                       ),
                     ),
                   ],
@@ -157,13 +153,12 @@ class ExploreScreen extends StatelessWidget {
               child: SizedBox(
                 height: s.height * 0.14,
                 child: ListView.builder(
-                  itemCount: exploreController.foodCategoryList.length,
+                  itemCount: StaticLists.foodCategoryList.length,
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: (context, index) => Padding(
                     padding: EdgeInsets.only(
-                        right: exploreController.foodCategoryList.length - 1 ==
-                                index
+                        right: StaticLists.foodCategoryList.length - 1 == index
                             ? 16
                             : 22),
                     child: Column(
@@ -173,7 +168,7 @@ class ExploreScreen extends StatelessWidget {
                           backgroundColor:
                               const Color.fromARGB(154, 163, 196, 192),
                           child: Image.asset(
-                            exploreController.foodCategoryList[index]['img'],
+                            StaticLists.foodCategoryList[index]['img'],
                             height: s.height * 0.05,
                           ),
                         ),
@@ -181,7 +176,7 @@ class ExploreScreen extends StatelessWidget {
                           height: s.height * 0.015,
                         ),
                         Text(
-                          exploreController.foodCategoryList[index]['title'],
+                          StaticLists.foodCategoryList[index]['title'],
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall!

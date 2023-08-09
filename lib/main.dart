@@ -1,9 +1,8 @@
 import 'package:design/view/screens/splash/splash.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'helper/bindings.dart';
 import 'themes/theme.dart';
-import 'package:device_preview/device_preview.dart';
 
 void main() {
   runApp(
@@ -17,6 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      initialBinding: MyControllerBindings(),
       title: 'Food Delivery',
       theme: light(),
       debugShowCheckedModeBanner: false,

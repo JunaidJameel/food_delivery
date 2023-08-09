@@ -2,11 +2,12 @@ import 'dart:async';
 
 import 'package:design/data/model/kitchenNearYou_model.dart';
 import 'package:design/data/model/mealNearyBy_model.dart';
-import 'package:design/utils/images.dart';
+import 'package:design/helper/static%20_lists.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ExploreController extends GetxController {
+  static ExploreController get instance => Get.find<ExploreController>();
   var initialButtonTap = RxInt(-1);
 
   void toggleFavorite(KitchenNearYou item) {
@@ -18,8 +19,6 @@ class ExploreController extends GetxController {
     item.favButtonTap = !item.favButtonTap;
     update();
   }
-
-// Extra Items in Food Button
 
   void buttonToggle(MealNearBy item, index) {
     item.extraItemslist[index]['buttonPress'] =
@@ -49,36 +48,10 @@ class ExploreController extends GetxController {
     update();
   }
 
-  List<Map<String, dynamic>> foodCategoryList = [
-    {
-      'img': Images.breakfast,
-      'title': 'Breakfast',
-    },
-    {
-      'img': Images.healthy,
-      'title': 'Healthy',
-    },
-    {
-      'img': Images.dessert,
-      'title': 'Dessert',
-    },
-    {
-      'img': Images.burger,
-      'title': 'Burger',
-    },
-    {
-      'img': Images.pizza,
-      'title': 'Pizza',
-    },
-    {
-      'img': Images.soda,
-      'title': 'Soda',
-    },
-  ];
   // RxBool checkFilterStatus = false.obs;
   final PageController pageController =
       PageController(initialPage: 0, viewportFraction: 0.91);
-  var exploreTxtController = TextEditingController();
+
   RxInt currentIndex = 0.obs;
   Timer? _timer;
 
@@ -96,7 +69,7 @@ class ExploreController extends GetxController {
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 300000), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
       if (currentIndex < 2) {
         currentIndex++;
       } else {
@@ -116,26 +89,10 @@ class ExploreController extends GetxController {
   }
 
   // filter screen data
-  List<Map<String, dynamic>> sortByList = [
-    {
-      'img': Images.breakfast,
-      'title': 'Kitchen Nearby',
-      'filter': false,
-    },
-    {
-      'img': Images.healthy,
-      'title': 'Delivery Time',
-      'filter': false,
-    },
-    {
-      'img': Images.dessert,
-      'title': 'Rating',
-      'filter': false,
-    },
-  ].obs;
+
   RxBool filterValue = false.obs;
   void onFilterChanged(bool? value, int index) {
-    sortByList[index]['filter'] = value ?? true;
+    StaticLists.sortByList[index]['filter'] = value ?? true;
     update();
   }
 
@@ -146,13 +103,7 @@ class ExploreController extends GetxController {
   }
 
 // priceRange
-  List<String> filterPrices = [
-    '5',
-    '10',
-    '100',
-    '1000',
-    '2000',
-  ];
+
   RxInt initalPrice = 100.obs;
   void priceCheck(int index) {
     initalPrice.value = index;
@@ -160,29 +111,18 @@ class ExploreController extends GetxController {
   }
 
   // filterCategory
-  List<Map<String, dynamic>> categoryList = [
-    {
-      'img': Images.breakfast,
-      'title': 'Fast Food',
-    },
-    {
-      'img': Images.healthy,
-      'title': 'Wester Food',
-    },
-    {
-      'img': Images.dessert,
-      'title': 'Beef and Steak',
-    },
-    {
-      'img': Images.dessert,
-      'title': 'Desert Loved',
-    },
-  ].obs;
 
-  // void clearAllFilters() {
+  bool _loading = true;
 
-  //   initalPrice.value == -1;
-  //   categoryInitialIndex.value == -1;
-  //   update();
-  // }
+  bool get loading => _loading;
+
+  set loading(bool value) {
+    _loading = value;
+    update();
+  }
+
+  updateLoading(bool value) {
+    _loading = value;
+    update();
+  }
 }

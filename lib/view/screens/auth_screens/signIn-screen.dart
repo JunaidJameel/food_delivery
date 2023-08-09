@@ -11,13 +11,25 @@ import 'package:design/view/screens/main_screens/explore_screen/bottom_navigatio
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   SignInScreen({super.key});
 
-  final AuthController authController = Get.put(AuthController());
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
 
+class _SignInScreenState extends State<SignInScreen> {
+  // final AuthController authController = Get.put(AuthController());
   final formKey = GlobalKey<FormState>();
 
+  var emailController = TextEditingController();
+
+  var passwordController = TextEditingController();
+
+  bool obsureText = true;
+  bool emailVal = false;
+  bool passwordVal = false;
+  bool checkBoxValue = false;
   @override
   Widget build(BuildContext context) {
     var s = MediaQuery.of(context).size;
@@ -41,42 +53,37 @@ class SignInScreen extends StatelessWidget {
                           .copyWith(fontSize: 34, fontWeight: FontWeight.w900),
                     ),
                     SizedBox(height: s.height * 0.05),
-                    GetBuilder<AuthController>(
-                      builder: (con) => AuthTxtField(
-                        controller: authController.lEmailController,
-                        validatorTxt: 'Please enter email',
-                        labelText: 'Email',
-                        onchange: (value) {
-                          con.updateEmailValidity(value.length >= 5);
-                        },
-                      ),
+                    AuthTxtField(
+                      controller: emailController,
+                      validatorTxt: 'Please enter email',
+                      labelText: 'Email',
+                      onchange: (value) {
+                        emailVal = value.length >= 5;
+                      },
                     ),
                     SizedBox(
                       height: s.height * 0.02,
                     ),
-                    GetBuilder<AuthController>(
-                      builder: (con) => AuthTxtField(
-                        controller: authController.lPasswordController,
-                        validatorTxt: 'Please enter Password',
-                        labelText: 'Password',
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            con.lHidePassword();
-                          },
-                          icon: Icon(
-                            con.lPasswordvisibility.value == true
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            color: con.lPasswordvisibility.value == true
-                                ? Colors.black
-                                : ColorsOfApp.appColor,
-                          ),
-                        ),
-                        onchange: (value) {
-                          con.updatePasswordValidity(value.length >= 6);
+                    AuthTxtField(
+                      controller: passwordController,
+                      validatorTxt: 'Please enter Password',
+                      labelText: 'Password',
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            obsureText = !obsureText;
+                          });
                         },
-                        obscureText: authController.lPasswordvisibility.value,
+                        icon: Icon(
+                          obsureText ? Icons.visibility_off : Icons.visibility,
+                          color:
+                              obsureText ? Colors.black : ColorsOfApp.appColor,
+                        ),
                       ),
+                      onchange: (value) {
+                        passwordVal = value.length >= 6;
+                      },
+                      obscureText: obsureText,
                     ),
                     SizedBox(
                       height: s.height * 0.02,
@@ -91,20 +98,19 @@ class SignInScreen extends StatelessWidget {
                   ),
                   Transform.scale(
                     scale: 1.3,
-                    child: Obx(
-                      () => Checkbox(
+                    child: Checkbox(
                         side: const BorderSide(
                             color: ColorsOfApp.textFieldgreyColor),
                         visualDensity: VisualDensity.adaptivePlatformDensity,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        value: authController.checkBoxValue.value,
-                        onChanged: (bool? value) {
-                          authController.checkBoxUpdate(value);
-                        },
-                      ),
-                    ),
+                        value: checkBoxValue,
+                        onChanged: (value) {
+                          setState(() {
+                            checkBoxValue = !checkBoxValue;
+                          });
+                        }),
                   ),
                   Text(
                     'Remember me',
@@ -136,23 +142,18 @@ class SignInScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   children: [
-                    GetBuilder<AuthController>(
-                      init: AuthController(),
-                      builder: (controller) => ButtonWidget(
-                        buttonTxt: 'Sign In',
-                        ontap: () {
-                          if (formKey.currentState!.validate()) {
-                            if (controller.isEmailValid.value &&
-                                controller.isPasswordValid.value) {
-                              Get.to(LandiBottomNavigationngPage());
-                            }
+                    ButtonWidget(
+                      buttonTxt: 'Sign In',
+                      ontap: () {
+                        if (formKey.currentState!.validate()) {
+                          if (emailVal || passwordVal == true) {
+                            Get.to(LandiBottomNavigationngPage());
                           }
-                        },
-                        buttonColor: (controller.isEmailValid.value &&
-                                controller.isPasswordValid.value)
-                            ? ColorsOfApp.appColor
-                            : ColorsOfApp.textFieldgreyColor,
-                      ),
+                        }
+                      },
+                      buttonColor: (emailVal && passwordVal)
+                          ? ColorsOfApp.appColor
+                          : ColorsOfApp.textFieldgreyColor,
                     ),
                     SizedBox(
                       height: s.height * 0.02,

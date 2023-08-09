@@ -1,4 +1,5 @@
 import 'package:design/controller/cart_controller.dart';
+import 'package:design/helper/static%20_lists.dart';
 import 'package:design/utils/app_constants.dart';
 import 'package:design/utils/colors.dart';
 import 'package:design/utils/images.dart';
@@ -120,7 +121,7 @@ class DateTimeScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              cartController.dateList[index]['day'],
+                              StaticLists.dateList[index]['day'],
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall!
@@ -136,7 +137,7 @@ class DateTimeScreen extends StatelessWidget {
                               height: s.height * 0.005,
                             ),
                             Text(
-                              cartController.dateList[index]['date'].toString(),
+                              StaticLists.dateList[index]['date'].toString(),
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall!
@@ -169,14 +170,14 @@ class DateTimeScreen extends StatelessWidget {
                     height: s.height * 0.045,
                     child: Row(
                       children: [
-                        Text(cartController.timeList[index]['time'],
+                        Text(StaticLists.timeList[index]['time'],
                             style: Theme.of(context)
                                 .textTheme
                                 .bodySmall!
                                 .copyWith(fontWeight: FontWeight.w600)),
                         const Spacer(),
                         Text(
-                          cartController.timeList[index]['delivery'],
+                          StaticLists.timeList[index]['delivery'],
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall!

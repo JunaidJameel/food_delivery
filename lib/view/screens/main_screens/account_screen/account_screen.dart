@@ -8,6 +8,8 @@ import 'package:design/view/base/custom_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../helper/static _lists.dart';
+
 class AccountScreen extends StatelessWidget {
   AccountScreen({super.key});
   AccountController accountController = Get.put(AccountController());
@@ -218,12 +220,12 @@ class AccountScreen extends StatelessWidget {
                                 EdgeInsets.only(bottom: index == 4 ? 0 : 10),
                             child: ListTile(
                               leading: Icon(
-                                accountController.pagelist[index]['icon'],
+                                StaticLists.pagelist[index]['icon'],
                                 color: ColorsOfApp.greyColor,
                                 size: 30,
                               ),
                               title: Text(
-                                accountController.pagelist[index]['title'],
+                                StaticLists.pagelist[index]['title'],
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodySmall!

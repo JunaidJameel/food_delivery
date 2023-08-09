@@ -3,17 +3,38 @@ import 'package:design/utils/app_constants.dart';
 import 'package:design/utils/colors.dart';
 import 'package:design/view/base/button-widget.dart';
 import 'package:design/view/base/loginBtn_widget.dart';
-import 'package:design/view/base/textfield_widget.dart';
 import 'package:design/view/screens/auth_screens/signIn-screen.dart';
 import 'package:design/view/screens/auth_screens/widget/auth_Textfield.dart';
 import 'package:design/view/screens/filter_screen/filter_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
   RegisterScreen({super.key});
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
   final formKey = GlobalKey<FormState>();
-  final AuthController authController = Get.put(AuthController());
+
+  // final AuthController authController = Get.put(AuthController());
+  var firstNameController = TextEditingController();
+
+  var lastNameController = TextEditingController();
+
+  var emailController = TextEditingController();
+
+  var phoneNumber = TextEditingController();
+
+  var passwordController = TextEditingController();
+
+  var confirmPasswordController = TextEditingController();
+
+  bool registerPassword = true;
+
+  bool confirmPassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +63,7 @@ class RegisterScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: AuthTxtField(
-                        controller: authController.rEmailController,
+                        controller: firstNameController,
                         validatorTxt: 'Please enter first name',
                         labelText: 'First name',
                       ),
@@ -52,7 +73,7 @@ class RegisterScreen extends StatelessWidget {
                     ),
                     Expanded(
                       child: AuthTxtField(
-                        controller: authController.rPasswordController,
+                        controller: passwordController,
                         validatorTxt: 'Please enter last name',
                         labelText: 'Last name',
                       ),
@@ -63,7 +84,7 @@ class RegisterScreen extends StatelessWidget {
                   height: s.height * 0.04,
                 ),
                 AuthTxtField(
-                  controller: authController.rEmailController,
+                  controller: emailController,
                   validatorTxt: 'Please enter email',
                   labelText: 'Email address',
                 ),
@@ -83,29 +104,27 @@ class RegisterScreen extends StatelessWidget {
                 ),
                 AuthTxtField(
                   keyboardType: TextInputType.phone,
-                  controller: authController.phoneNumber,
+                  controller: phoneNumber,
                   validatorTxt: 'Please enter your Phone number',
                   labelText: 'Phone number',
                 ),
                 SizedBox(
                   height: s.height * 0.02,
                 ),
-                Obx(
-                  () => AuthTxtField(
-                    controller: authController.rPasswordController,
-                    validatorTxt: 'Please enter Password',
-                    labelText: 'Password',
-                    obscureText: authController.rPasswordvisibility.value,
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        authController.rPasswordvisibility.value =
-                            !authController.rPasswordvisibility.value;
-                      },
-                      icon: Icon(
-                          authController.rPasswordvisibility.value == true
-                              ? Icons.visibility_off
-                              : Icons.visibility),
-                    ),
+                AuthTxtField(
+                  controller: passwordController,
+                  validatorTxt: 'Please enter Password',
+                  labelText: 'Password',
+                  obscureText: registerPassword,
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        registerPassword = !registerPassword;
+                      });
+                    },
+                    icon: Icon(registerPassword == true
+                        ? Icons.visibility_off
+                        : Icons.visibility),
                   ),
                 ),
                 SizedBox(
@@ -122,24 +141,20 @@ class RegisterScreen extends StatelessWidget {
                 SizedBox(
                   height: s.height * 0.015,
                 ),
-                Obx(
-                  () => AuthTxtField(
-                    controller: authController.rConfirmPasswordController,
-                    validatorTxt: 'Please enter confirm password',
-                    labelText: 'Confirm Password',
-                    obscureText:
-                        authController.rConfirmPasswordvisibility.value,
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        authController.rConfirmPasswordvisibility.value =
-                            !authController.rConfirmPasswordvisibility.value;
-                      },
-                      icon: Icon(
-                          authController.rConfirmPasswordvisibility.value ==
-                                  true
-                              ? Icons.visibility_off
-                              : Icons.visibility),
-                    ),
+                AuthTxtField(
+                  controller: confirmPasswordController,
+                  validatorTxt: 'Please enter confirm password',
+                  labelText: 'Confirm Password',
+                  obscureText: confirmPassword,
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        confirmPassword = !confirmPassword;
+                      });
+                    },
+                    icon: Icon(confirmPassword == true
+                        ? Icons.visibility_off
+                        : Icons.visibility),
                   ),
                 ),
                 SizedBox(
@@ -152,13 +167,10 @@ class RegisterScreen extends StatelessWidget {
                       Get.off(FilterScreen());
                     }
                   },
-                  buttonColor: (authController.rEmailController.text.length >=
-                              4 &&
-                          authController.phoneNumber.text.length == 11 &&
-                          authController.rPasswordController.text.length >= 4 &&
-                          authController
-                                  .rConfirmPasswordController.text.length >=
-                              4)
+                  buttonColor: (emailController.text.length >= 4 &&
+                          phoneNumber.text.length == 11 &&
+                          passwordController.text.length >= 4 &&
+                          confirmPasswordController.text.length >= 4)
                       ? ColorsOfApp.appColor
                       : ColorsOfApp.textFieldgreyColor,
                 ),
