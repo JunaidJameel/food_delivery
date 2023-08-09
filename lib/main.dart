@@ -1,3 +1,4 @@
+import 'package:design/view/screens/main_screens/explore_screen/bottom_navigation.dart';
 import 'package:design/view/screens/splash/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -16,11 +17,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialBinding: MyControllerBindings(),
       title: 'Food Delivery',
       theme: light(),
       debugShowCheckedModeBanner: false,
-      home: const SplashScreen(),
+      home: LandiBottomNavigationngPage(),
     );
   }
 }

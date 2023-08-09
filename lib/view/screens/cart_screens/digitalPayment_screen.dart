@@ -76,7 +76,7 @@ class DigitalPaymentScreen extends StatelessWidget {
                         activeColor: ColorsOfApp.appColor,
                         toggleable: true,
                         value: index,
-                        groupValue: controller.radioBtnValue.value,
+                        groupValue: controller.radioBtnValue,
                         onChanged: (value) {
                           controller.radioButton(value ?? 0);
                         },

@@ -1,9 +1,7 @@
-import 'package:design/controller/auth_controller.dart';
 import 'package:design/utils/app_constants.dart';
 import 'package:design/utils/colors.dart';
 import 'package:design/utils/images.dart';
 import 'package:design/view/base/button-widget.dart';
-import 'package:design/view/base/textfield_widget.dart';
 import 'package:design/view/screens/auth_screens/widget/auth_Textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,7 +12,6 @@ class ForgotPasswordWidget extends StatelessWidget {
   ForgotPasswordWidget({
     super.key,
   });
-  final AuthController authController = Get.put(AuthController());
   var forgotPasswordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   @override
@@ -81,42 +78,38 @@ class ForgotPasswordWidget extends StatelessWidget {
                 SizedBox(
                   height: s.height * 0.04,
                 ),
-                GetBuilder<AuthController>(
-                  builder: (con) => AuthTxtField(
-                    controller: forgotPasswordController,
-                    validatorTxt: 'Please enter email',
-                    labelText: 'Enter Email',
-                    onchange: (value) {
-                      // authController.updateEmailValidity(value.length > 7);
-                    },
-                  ),
+                AuthTxtField(
+                  controller: forgotPasswordController,
+                  validatorTxt: 'Please enter email',
+                  labelText: 'Enter Email',
+                  onchange: (value) {
+                    // authController.updateEmailValidity(value.length > 7);
+                  },
                 ),
                 SizedBox(
                   height: s.height * 0.04,
                 ),
-                GetBuilder<AuthController>(
-                  builder: (con) => ButtonWidget(
-                      buttonTxt: 'Send Email',
-                      buttonColor: forgotPasswordController.text.length >= 4
-                          ? ColorsOfApp.appColor
-                          : ColorsOfApp.textFieldgreyColor,
-                      ontap: () {
-                        if (formKey.currentState!.validate()) {
-                          if (forgotPasswordController.text.length > 4) {
-                            Get.back();
+                ButtonWidget(
+                    buttonTxt: 'Send Email',
+                    buttonColor: forgotPasswordController.text.length >= 4
+                        ? ColorsOfApp.appColor
+                        : ColorsOfApp.textFieldgreyColor,
+                    ontap: () {
+                      if (formKey.currentState!.validate()) {
+                        if (forgotPasswordController.text.length > 4) {
+                          Get.back();
 
-                            showModalBottomSheet<dynamic>(
-                                isScrollControlled: true,
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return Wrap(children: const [
-                                    CheckEmailWidget(),
-                                  ]);
-                                });
-                          }
+                          showModalBottomSheet<dynamic>(
+                              isScrollControlled: true,
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Wrap(children: const [
+                                  CheckEmailWidget(),
+                                ]);
+                              });
                         }
-                      }),
-                ),
+                      }
+                    }),
               ],
             ),
           ),

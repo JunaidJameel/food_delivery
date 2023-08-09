@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:design/controller/exploreScreen_controller.dart';
 import 'package:design/helper/static%20_lists.dart';
 import 'package:design/utils/app_constants.dart';
@@ -15,8 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ExploreScreen extends StatelessWidget {
-  ExploreScreen({super.key});
-  final ExploreController exploreController = Get.put(ExploreController());
+  const ExploreScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -190,7 +191,7 @@ class ExploreScreen extends StatelessWidget {
               ),
             ),
             const CustomDividerWidget(),
-            ScrollDealsWidget(),
+            const ScrollDealsWidget(),
             const CustomDividerWidget(),
             KitchenNearYouWidget(),
             const CustomDividerWidget(),

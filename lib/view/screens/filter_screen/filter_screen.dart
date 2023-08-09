@@ -1,13 +1,10 @@
-import 'package:design/controller/auth_controller.dart';
 import 'package:design/utils/app_constants.dart';
 import 'package:design/utils/colors.dart';
 import 'package:design/view/screens/filter_screen/widget/filterContainer_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class FilterScreen extends StatelessWidget {
-  FilterScreen({super.key});
-  final AuthController authController = Get.put(AuthController());
+  const FilterScreen({super.key});
   @override
   Widget build(BuildContext context) {
     var s = MediaQuery.of(context).size;

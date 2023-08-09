@@ -1,4 +1,3 @@
-import 'package:design/controller/auth_controller.dart';
 import 'package:design/utils/colors.dart';
 import 'package:design/utils/images.dart';
 import 'package:design/view/base/button-widget.dart';

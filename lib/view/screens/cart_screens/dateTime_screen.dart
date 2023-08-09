@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 
 class DateTimeScreen extends StatelessWidget {
   DateTimeScreen({super.key});
-  CartController cartController = Get.put(CartController());
+  // CartController cartController = Get.put(CartController());
   @override
   Widget build(BuildContext context) {
     var s = MediaQuery.of(context).size;
@@ -98,8 +98,8 @@ class DateTimeScreen extends StatelessWidget {
                   bottom: AppConstants.defaultPadding),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                return Obx(
-                  () => GestureDetector(
+                return GetBuilder<CartController>(
+                  builder: (cartController) => GestureDetector(
                     onTap: () {
                       cartController.selectDate(index);
                     },
@@ -191,7 +191,7 @@ class DateTimeScreen extends StatelessWidget {
                             activeColor: ColorsOfApp.appColor,
                             toggleable: true,
                             value: index,
-                            groupValue: controller.selectedValue.value,
+                            groupValue: controller.selectedValue,
                             onChanged: (value) {
                               controller.setSelectedValue(value ?? 0);
                             },
@@ -210,18 +210,19 @@ class DateTimeScreen extends StatelessWidget {
               );
             },
           )),
-          Obx(
-            () => cartController.selectedValue.value.isLowerThan(8)
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: AppConstants.defaultPadding),
-                    child: ButtonWidget(
-                        buttonTxt: 'Confirm Order',
-                        ontap: () {
-                          Get.to(OrderConfirmScreen());
-                        }),
-                  )
-                : const SizedBox(),
+          GetBuilder<CartController>(
+            builder: (cartController) =>
+                cartController.selectedValue.isLowerThan(8)
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: AppConstants.defaultPadding),
+                        child: ButtonWidget(
+                            buttonTxt: 'Confirm Order',
+                            ontap: () {
+                              Get.to(OrderConfirmScreen());
+                            }),
+                      )
+                    : const SizedBox(),
           ),
         ],
       ),

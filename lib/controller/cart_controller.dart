@@ -5,20 +5,20 @@ class CartController extends GetxController {
 
   void selectDate(int index) {
     initalDate.value = index;
-  }
-
-  Rx<int> selectedValue = 100.obs;
-
-  void setSelectedValue(int value) {
-    selectedValue.value = value;
     update();
   }
-  // digitalPayment Screen
 
-  Rx<int> radioBtnValue = 0.obs;
+  int selectedValue = 100;
+
+  void setSelectedValue(int value) {
+    selectedValue = value;
+    update();
+  }
+
+  int radioBtnValue = 0;
 
   void radioButton(int value) {
-    radioBtnValue.value = value;
+    radioBtnValue = value;
 
     update();
   }

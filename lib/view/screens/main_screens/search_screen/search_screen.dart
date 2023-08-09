@@ -86,8 +86,6 @@ class SearchScreen extends StatelessWidget {
                 // inputBorder: InputBorder.none,
                 textfiledColor: const Color.fromARGB(255, 232, 232, 232),
                 hintText: 'Search foods and Ketchen',
-
-                controller: searchController.searchTxtFieldController,
               ),
             ),
             SizedBox(
